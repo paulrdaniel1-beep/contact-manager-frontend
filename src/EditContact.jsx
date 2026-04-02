@@ -1,24 +1,26 @@
 import { useState } from "react";
 
 function EditContact({ contacts, onUpdateContact }) {
+  const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [familyName, setFamilyName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
-  function handleSelect(e) {
-    const id = e.target.value;
-    setSelectedId(id);
+  const filtered = contacts.filter((c) => {
+    const full = `${c.firstName} ${c.familyName}`.toLowerCase();
+    return full.includes(query.toLowerCase());
+  });
 
-    const contact = contacts.find((c) => String(c.id) === String(id));
+  function handleSelect(contact) {
+    setSelectedId(contact.id);
+    setQuery(`${contact.firstName} ${contact.familyName}`);
 
-    if (contact) {
-      setFirstName(contact.firstName);
-      setFamilyName(contact.familyName);
-      setEmail(contact.email);
-      setPhone(contact.phone);
-    }
+    setFirstName(contact.firstName);
+    setFamilyName(contact.familyName);
+    setEmail(contact.email);
+    setPhone(contact.phone);
   }
 
   function handleSubmit(e) {
@@ -37,22 +39,60 @@ function EditContact({ contacts, onUpdateContact }) {
 
   return (
     <div className="edit-contact">
-      <label>Select a contact to edit:</label>
+      <label>Search for a contact to edit:</label>
 
-      {/* Scrollable combo-box style list */}
-      <select
-        value={selectedId}
-        onChange={handleSelect}
-        size="6"
-        style={{ width: "100%", marginBottom: "1rem" }}
-      >
-        <option value="">-- Choose a contact --</option>
-        {contacts.map((c) => (
-          <option key={c.id} value={c.id}>
-            {c.firstName} {c.familyName}
-          </option>
-        ))}
-      </select>
+      {/* Modern searchable combo-box */}
+      <div className="combo-container" style={{ position: "relative" }}>
+        <input
+          type="text"
+          placeholder="Type a name..."
+          value={query}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setSelectedId("");
+          }}
+          style={{ width: "100%", padding: "8px" }}
+        />
+
+        {query && !selectedId && (
+          <ul
+            className="combo-dropdown"
+            style={{
+              position: "absolute",
+              top: "40px",
+              left: 0,
+              right: 0,
+              maxHeight: "150px",
+              overflowY: "auto",
+              background: "white",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              zIndex: 10,
+              listStyle: "none",
+              padding: 0,
+              margin: 0
+            }}
+          >
+            {filtered.map((c) => (
+              <li
+                key={c.id}
+                onClick={() => handleSelect(c)}
+                style={{
+                  padding: "8px",
+                  cursor: "pointer",
+                  borderBottom: "1px solid #eee"
+                }}
+              >
+                {c.firstName} {c.familyName}
+              </li>
+            ))}
+
+            {filtered.length === 0 && (
+              <li style={{ padding: "8px", color: "#777" }}>No matches</li>
+            )}
+          </ul>
+        )}
+      </div>
 
       {selectedId && (
         <form onSubmit={handleSubmit} className="contact-form">
