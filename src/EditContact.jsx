@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function EditContact({ contacts, onUpdateContact }) {
+function EditContact({ contacts, onUpdateContact, onDeleteContact }) {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -41,7 +41,6 @@ function EditContact({ contacts, onUpdateContact }) {
     <div className="edit-contact">
       <label>Search for a contact to edit:</label>
 
-      {/* Modern searchable combo-box */}
       <div className="combo-container" style={{ position: "relative" }}>
         <input
           type="text"
@@ -128,7 +127,17 @@ function EditContact({ contacts, onUpdateContact }) {
             required
           />
 
-          <button type="submit">Save Changes</button>
+          <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+            <button type="submit">Save Changes</button>
+
+            <button
+              type="button"
+              style={{ backgroundColor: "#c62828", color: "white" }}
+              onClick={() => onDeleteContact(selectedId)}
+            >
+              Delete Contact
+            </button>
+          </div>
         </form>
       )}
     </div>
