@@ -5,22 +5,25 @@ function SearchContacts({ contacts }) {
 
   const filtered = contacts.filter((c) => {
     const fullName = `${c.firstName} ${c.familyName}`.toLowerCase();
-    return fullName.includes(query.toLowerCase());
+    const q = query.toLowerCase();
+
+    return (
+      fullName.includes(q) ||
+      c.email.toLowerCase().includes(q) ||
+      c.phone.toLowerCase().includes(q)
+    );
   });
 
   return (
-    <div>
-      <h2>Search Contacts</h2>
+    <div className="search-contacts">
+      <input
+        type="text"
+        placeholder="Search by name, email, or phone..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+      />
 
-      <form>
-        <input
-          placeholder="Search by name..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </form>
-
-      <ul>
+      <ul className="search-results">
         {filtered.map((c) => (
           <li key={c.id}>
             {c.firstName} {c.familyName} — {c.email} — {c.phone}

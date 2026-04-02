@@ -12,11 +12,20 @@ function App() {
   const [activeTab, setActiveTab] = useState("add");
   const [theme, setTheme] = useState("light");
 
-  // Load contacts from backend on startup
   useEffect(() => {
     fetch(`${API_BASE}/contacts`)
       .then((res) => res.json())
-      .then((data) => setContacts(data))
+      .then((data) =>
+        setContacts(
+          data.map((c) => ({
+            id: c.id,
+            firstName: c.first_name,
+            familyName: c.family_name,
+            email: c.email,
+            phone: c.phone
+          }))
+        )
+      )
       .catch((err) => console.error("Failed to load contacts", err));
   }, []);
 
@@ -24,29 +33,58 @@ function App() {
     setTheme(theme === "light" ? "dark" : "light");
   }
 
-  // Add a contact (POST)
   function addContact(contact) {
     fetch(`${API_BASE}/contacts`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(contact),
+      body: JSON.stringify({
+        first_name: contact.firstName,
+        family_name: contact.familyName,
+        email: contact.email,
+        phone: contact.phone
+      }),
     })
       .then((res) => res.json())
-      .then((saved) => setContacts((prev) => [...prev, saved]))
+      .then((saved) =>
+        setContacts((prev) => [
+          ...prev,
+          {
+            id: saved.id,
+            firstName: saved.first_name,
+            familyName: saved.family_name,
+            email: saved.email,
+            phone: saved.phone
+          }
+        ])
+      )
       .catch((err) => console.error("Failed to add contact", err));
   }
 
-  // Update a contact (PUT)
   function updateContact(updated) {
     fetch(`${API_BASE}/contacts/${updated.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updated),
+      body: JSON.stringify({
+        first_name: updated.firstName,
+        family_name: updated.familyName,
+        email: updated.email,
+        phone: updated.phone
+      }),
     })
       .then((res) => res.json())
       .then((saved) =>
         setContacts((prev) =>
-          prev.map((c) => (c.id === saved.id ? saved : c))
+          prev.map((c) =>
+            c.id === saved.id
+              ? {
+                  id: saved.id,
+                  firstName: saved.first_name,
+                  familyName: saved.family_name,
+                  email: saved.email,
+                  phone: saved.phone
+                }
+              : c
+          )
         )
       )
       .catch((err) => console.error("Failed to update contact", err));
@@ -75,29 +113,6 @@ function App() {
           {activeTab === "search" && (
             <div className="tab-content">
               <SearchContacts contacts={contacts} />
-            </div>
-          )}
-
-          {activeTab !== "edit" && (
-            <div className="all-contacts">
-              <h2>All Contacts</h2>
-              <ul>
-                {contacts.map((c) => {
-                  const fullName = c.first_name
-                    ? `${c.first_name} ${c.family_name}`
-                    : c.firstName
-                    ? `${c.firstName} ${c.familyName}`
-                    : c.name;
-
-                  return (
-                    <li key={c.id} className="contact-item">
-                      <span>
-                        {fullName} — {c.email} — {c.phone}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
             </div>
           )}
         </div>

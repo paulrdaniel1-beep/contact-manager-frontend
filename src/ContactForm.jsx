@@ -10,7 +10,6 @@ function ContactForm({ onAddContact }) {
     e.preventDefault();
 
     const newContact = {
-      id: crypto.randomUUID(),
       firstName,
       familyName,
       email,
@@ -26,43 +25,38 @@ function ContactForm({ onAddContact }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-      <h2>Add Contact</h2>
+    <form onSubmit={handleSubmit} className="contact-form">
+      <label>First Name</label>
+      <input
+        type="text"
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+        required
+      />
 
-      <div>
-        <label>First Name:</label>
-        <input
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
-      </div>
+      <label>Family Name</label>
+      <input
+        type="text"
+        value={familyName}
+        onChange={(e) => setFamilyName(e.target.value)}
+        required
+      />
 
-      <div>
-        <label>Family Name:</label>
-        <input
-          value={familyName}
-          onChange={(e) => setFamilyName(e.target.value)}
-        />
-      </div>
+      <label>Email</label>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
 
-      <div>
-        <label>Email:</label>
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          required
-        />
-      </div>
-
-      <div>
-        <label>Phone:</label>
-        <input
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          required
-        />
-      </div>
+      <label>Phone</label>
+      <input
+        type="text"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        required
+      />
 
       <button type="submit">Add Contact</button>
     </form>
@@ -70,4 +64,3 @@ function ContactForm({ onAddContact }) {
 }
 
 export default ContactForm;
-
