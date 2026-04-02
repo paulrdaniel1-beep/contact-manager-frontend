@@ -175,6 +175,23 @@ ul {
   align-items: center;
 }
 
+.all-contacts {
+  max-height: 220px;       /* roughly 5 contacts */
+  overflow-y: auto;
+  padding: 10px;
+  background: #f8f9fc;
+  border: 1px solid #e3e7ef;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* Dark mode support */
+.app-container.dark .all-contacts {
+  background: #2a2c31;
+  border-color: #444;
+}
+
+
 .app-container.dark .contact-item {
   background: #2a2c31;
   border-color: #444;
