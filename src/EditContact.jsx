@@ -11,7 +11,8 @@ function EditContact({ contacts, onUpdateContact }) {
     const id = e.target.value;
     setSelectedId(id);
 
-    const contact = contacts.find((c) => c.id === Number(id));
+    const contact = contacts.find((c) => String(c.id) === String(id));
+
     if (contact) {
       setFirstName(contact.firstName);
       setFamilyName(contact.familyName);
@@ -24,7 +25,7 @@ function EditContact({ contacts, onUpdateContact }) {
     e.preventDefault();
 
     const updated = {
-      id: Number(selectedId),
+      id: selectedId,
       firstName,
       familyName,
       email,
@@ -37,8 +38,15 @@ function EditContact({ contacts, onUpdateContact }) {
   return (
     <div className="edit-contact">
       <label>Select a contact to edit:</label>
-      <select value={selectedId} onChange={handleSelect}>
-        <option value="">-- Choose --</option>
+
+      {/* Scrollable combo-box style list */}
+      <select
+        value={selectedId}
+        onChange={handleSelect}
+        size="6"
+        style={{ width: "100%", marginBottom: "1rem" }}
+      >
+        <option value="">-- Choose a contact --</option>
         {contacts.map((c) => (
           <option key={c.id} value={c.id}>
             {c.firstName} {c.familyName}
