@@ -4,6 +4,7 @@ import SearchContacts from "./SearchContacts";
 import EditContact from "./EditContact";
 import HeaderBar from "./HeaderBar";
 import Sidebar from "./Sidebar";
+import ContactsList from "./ContactsList";
 
 const API_BASE = "https://contact-manager-backend-dhl9.onrender.com";
 
@@ -56,8 +57,7 @@ function App() {
             phone: saved.phone
           }
         ])
-      )
-      .catch((err) => console.error("Failed to add contact", err));
+      );
   }
 
   function updateContact(updated) {
@@ -86,8 +86,7 @@ function App() {
               : c
           )
         )
-      )
-      .catch((err) => console.error("Failed to update contact", err));
+      );
   }
 
   return (
@@ -99,9 +98,12 @@ function App() {
 
         <div style={{ flex: 1 }}>
           {activeTab === "add" && (
-            <div className="tab-content">
-              <ContactForm onAddContact={addContact} />
-            </div>
+            <>
+              <div className="tab-content">
+                <ContactForm onAddContact={addContact} />
+              </div>
+              <ContactsList contacts={contacts} />
+            </>
           )}
 
           {activeTab === "edit" && (
