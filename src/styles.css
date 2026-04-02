@@ -182,7 +182,7 @@ ul {
   background: #f8f9fc;
   border: 1px solid #e3e7ef;
   border-radius: 8px;
-  margin-top: 20px;
+  margin-top: 6px;
 }
 
 /* Dark mode support */
@@ -191,6 +191,11 @@ ul {
   border-color: #444;
 }
 
+.all-contacts .contact-item {
+  padding: 8px 10px;      /* smaller padding */
+  margin-bottom: 6px;     /* tighter spacing */
+  font-size: 14px;        /* optional: slightly smaller text */
+}
 
 .app-container.dark .contact-item {
   background: #2a2c31;
