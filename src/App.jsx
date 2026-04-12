@@ -31,7 +31,10 @@ function App() {
     const full = `${c.firstName} ${c.familyName}`.toLowerCase();
     return full.includes(search.toLowerCase());
   })
-  .sort((a, b) => a.familyName.localeCompare(b.familyName));
+  .sort((a, b) => {
+  const last = a.familyName.localeCompare(b.familyName);
+  return last !== 0 ? last : a.firstName.localeCompare(b.firstName);
+});
 
 
   const handleAdd = async (contact) => {
