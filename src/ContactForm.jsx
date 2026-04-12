@@ -39,7 +39,7 @@ function ContactForm({
   };
 
   return (
-    <div>
+    <div className="contact-card">
       <form>
         <input
           placeholder="First Name"
@@ -67,15 +67,24 @@ function ContactForm({
       </form>
 
       <div style={{ marginTop: "12px" }}>
-        <button onClick={clearSelection}>Create New</button>
+        <button
+          onClick={clearSelection}
+          title="Clear the form and start a new contact"
+        >
+          Create New
+        </button>
 
-        <button onClick={handleSave}>
+        <button
+          onClick={handleSave}
+          title="Save this contact to your database"
+        >
           {selectedContact ? "Save Changes" : "Save New"}
         </button>
 
         <button
           disabled={!selectedContact}
           onClick={() => onDeleteContact(selectedContact?.id)}
+          title="Delete the selected contact"
         >
           Delete Contact
         </button>
