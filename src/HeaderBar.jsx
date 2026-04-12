@@ -17,7 +17,7 @@ function HeaderBar({ theme, toggleTheme }) {
           style={{
             fontSize: "0.75rem",
             color: "#888",
-            marginTop: "2px",
+            marginTop: "10px",
             textAlign: "left",
           }}
         >
