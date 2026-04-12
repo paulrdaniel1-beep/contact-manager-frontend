@@ -21,33 +21,6 @@
   color-scheme: light dark;
   color: var(--text);
   background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-@media (max-width: 1024px) {
-  :root {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px,
-      rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
 }
 
 body {
@@ -66,7 +39,6 @@ body {
 }
 
 /* HEADINGS */
-
 h1,
 h2 {
   font-family: var(--heading);
@@ -76,7 +48,6 @@ h2 {
 
 h1 {
   font-size: 32px;
-  letter-spacing: -0.5px;
   margin: 24px 0 12px;
   text-align: center;
 }
@@ -87,11 +58,9 @@ h2 {
 }
 
 /* APP LAYOUT */
-
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   padding: 20px;
 }
 
@@ -106,7 +75,6 @@ h2 {
 }
 
 /* SIDEBAR */
-
 .sidebar {
   width: 180px;
   padding: 15px;
@@ -135,7 +103,6 @@ h2 {
 }
 
 /* HEADER BAR */
-
 .header-bar {
   display: flex;
   justify-content: space-between;
@@ -143,7 +110,6 @@ h2 {
 }
 
 /* FORM + INPUTS */
-
 form {
   margin-top: 10px;
 }
@@ -161,7 +127,6 @@ input {
 }
 
 /* BUTTONS */
-
 button {
   background: #007bff;
   color: #fff;
@@ -188,7 +153,6 @@ button:disabled {
 }
 
 /* CONTACT LIST */
-
 .all-contacts {
   max-height: 260px;
   overflow-y: auto;
@@ -210,8 +174,14 @@ button:disabled {
   background: #f5f5f5;
 }
 
-/* DARK MODE OVERRIDES */
+/* SELECTED CONTACT HIGHLIGHT */
+.contact-item.selected {
+  background: var(--accent-bg);
+  border-left: 4px solid var(--accent);
+  font-weight: 600;
+}
 
+/* DARK MODE */
 .app-container.dark {
   background: #1e1e1e;
   color: #f0f0f0;

@@ -66,7 +66,6 @@ function ContactForm({
         />
       </form>
 
-      {/* BUTTONS BELOW THE FORM */}
       <div style={{ marginTop: "12px" }}>
         <button onClick={clearSelection}>Create New</button>
 

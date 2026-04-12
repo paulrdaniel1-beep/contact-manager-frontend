@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./App.css";
 import HeaderBar from "./HeaderBar";
 import Sidebar from "./Sidebar";
 import ContactForm from "./ContactForm";
@@ -15,15 +16,20 @@ function App() {
   const [theme, setTheme] = useState("light");
   const [contacts, setContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
+  const [search, setSearch] = useState("");
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
-  // Load contacts from backend
   useEffect(() => {
     fetchContacts().then(setContacts);
   }, []);
+
+  const filteredContacts = contacts.filter((c) => {
+    const full = `${c.firstName} ${c.familyName}`.toLowerCase();
+    return full.includes(search.toLowerCase());
+  });
 
   const handleAdd = async (contact) => {
     const newContact = await createContact(contact);
@@ -61,10 +67,34 @@ function App() {
             clearSelection={() => setSelectedContact(null)}
           />
 
-          <h3>All Contacts</h3>
+          {/* SEARCH + TITLE */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: "20px",
+            }}
+          >
+            <h3 style={{ margin: 0 }}>All Contacts</h3>
+
+            <input
+              type="text"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              style={{
+                padding: "6px 10px",
+                borderRadius: "6px",
+                border: "1px solid var(--border)",
+                width: "180px",
+              }}
+            />
+          </div>
 
           <ContactsList
-            contacts={contacts}
+            contacts={filteredContacts}
+            selectedId={selectedContact?.id}
             onSelectContact={(c) => setSelectedContact(c)}
           />
         </div>
