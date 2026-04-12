@@ -40,19 +40,6 @@ function ContactForm({
 
   return (
     <div>
-      <button onClick={clearSelection}>Create New</button>
-
-      <button onClick={handleSave}>
-        {selectedContact ? "Save Changes" : "Save New"}
-      </button>
-
-      <button
-        disabled={!selectedContact}
-        onClick={() => onDeleteContact(selectedContact?.id)}
-      >
-        Delete Contact
-      </button>
-
       <form>
         <input
           placeholder="First Name"
@@ -78,9 +65,24 @@ function ContactForm({
           onChange={(e) => setPhone(e.target.value)}
         />
       </form>
+
+      {/* BUTTONS BELOW THE FORM */}
+      <div style={{ marginTop: "12px" }}>
+        <button onClick={clearSelection}>Create New</button>
+
+        <button onClick={handleSave}>
+          {selectedContact ? "Save Changes" : "Save New"}
+        </button>
+
+        <button
+          disabled={!selectedContact}
+          onClick={() => onDeleteContact(selectedContact?.id)}
+        >
+          Delete Contact
+        </button>
+      </div>
     </div>
   );
 }
 
 export default ContactForm;
-
