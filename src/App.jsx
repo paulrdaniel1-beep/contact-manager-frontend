@@ -78,7 +78,7 @@ function App() {
 >
   <h3 style={{ margin: 0 }}>All Contacts</h3>
 
-  <div style={{ position: "relative", width: "270px" }}>
+  <div style={{ position: "relative", width: "270px", marginTop: "6px" }}>
     <input
       type="text"
       placeholder="Search..."
