@@ -105,7 +105,7 @@ function ContactForm({
           onClick={clearSelection}
           title="Clear the form and start a new contact"
         >
-          ➕ Create New
+          ➕ Create
         </button>
 
         <button
@@ -113,7 +113,7 @@ function ContactForm({
           onClick={handleSave}
           title="Save this contact to your database"
         >
-          💾 {selectedContact ? "Save Changes" : "Save New"}
+          💾 {selectedContact ? "Save Changes" : "Save"}
         </button>
 
         <button
@@ -122,7 +122,7 @@ function ContactForm({
           onClick={handleDelete}
           title="Delete the selected contact"
         >
-          🗑️ Delete Contact
+          🗑️ Delete
         </button>
       </div>
     </div>
