@@ -26,10 +26,13 @@ function App() {
     fetchContacts().then(setContacts);
   }, []);
 
-  const filteredContacts = contacts.filter((c) => {
+  const filteredContacts = contacts
+  .filter((c) => {
     const full = `${c.firstName} ${c.familyName}`.toLowerCase();
     return full.includes(search.toLowerCase());
-  });
+  })
+  .sort((a, b) => a.familyName.localeCompare(b.familyName));
+
 
   const handleAdd = async (contact) => {
     const newContact = await createContact(contact);
@@ -78,7 +81,7 @@ function App() {
 >
   <h3 style={{ margin: 0 }}>All Contacts</h3>
 
-  <div style={{ position: "relative", width: "270px", marginTop: "6px" }}>
+  <div style={{ position: "relative", width: "270px", marginTop: "10px" }}>
     <input
       type="text"
       placeholder="Search..."
