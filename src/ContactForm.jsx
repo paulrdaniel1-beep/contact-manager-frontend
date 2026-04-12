@@ -12,6 +12,8 @@ function ContactForm({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
+  const [toast, setToast] = useState("");
+
   useEffect(() => {
     if (selectedContact) {
       setFirstName(selectedContact.firstName);
@@ -26,20 +28,51 @@ function ContactForm({
     }
   }, [selectedContact]);
 
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(""), 2500);
+  };
+
   const handleSave = () => {
     const contact = { firstName, familyName, email, phone };
 
     if (selectedContact) {
       onUpdateContact({ ...contact, id: selectedContact.id });
+      showToast("Contact updated");
     } else {
       onAddContact(contact);
+      showToast("Contact added");
     }
 
     clearSelection();
   };
 
+  const handleDelete = () => {
+    if (!selectedContact) return;
+    onDeleteContact(selectedContact.id);
+    showToast("Contact deleted");
+  };
+
   return (
     <div className="contact-card">
+      {/* Toast message */}
+      {toast && (
+        <div
+          style={{
+            background: "var(--accent-bg)",
+            border: "1px solid var(--accent-border)",
+            padding: "10px 14px",
+            borderRadius: "6px",
+            marginBottom: "12px",
+            color: "var(--accent)",
+            fontWeight: 600,
+            textAlign: "center",
+          }}
+        >
+          {toast}
+        </div>
+      )}
+
       <form>
         <input
           placeholder="First Name"
@@ -68,25 +101,28 @@ function ContactForm({
 
       <div style={{ marginTop: "12px" }}>
         <button
+          type="button"
           onClick={clearSelection}
           title="Clear the form and start a new contact"
         >
-          Create New
+          ➕ Create New
         </button>
 
         <button
+          type="button"
           onClick={handleSave}
           title="Save this contact to your database"
         >
-          {selectedContact ? "Save Changes" : "Save New"}
+          💾 {selectedContact ? "Save Changes" : "Save New"}
         </button>
 
         <button
+          type="button"
           disabled={!selectedContact}
-          onClick={() => onDeleteContact(selectedContact?.id)}
+          onClick={handleDelete}
           title="Delete the selected contact"
         >
-          Delete Contact
+          🗑️ Delete Contact
         </button>
       </div>
     </div>
