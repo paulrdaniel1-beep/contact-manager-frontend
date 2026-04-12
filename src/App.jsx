@@ -12,6 +12,8 @@ import {
   deleteContact,
 } from "./api";
 
+import { SignedIn, SignedOut, SignIn } from "@clerk/clerk-react";
+
 function App() {
   const [theme, setTheme] = useState("light");
   const [contacts, setContacts] = useState([]);
@@ -27,15 +29,14 @@ function App() {
   }, []);
 
   const filteredContacts = contacts
-  .filter((c) => {
-    const full = `${c.firstName} ${c.familyName}`.toLowerCase();
-    return full.includes(search.toLowerCase());
-  })
-  .sort((a, b) => {
-  const last = a.familyName.localeCompare(b.familyName);
-  return last !== 0 ? last : a.firstName.localeCompare(b.firstName);
-});
-
+    .filter((c) => {
+      const full = `${c.firstName} ${c.familyName}`.toLowerCase();
+      return full.includes(search.toLowerCase());
+    })
+    .sort((a, b) => {
+      const last = a.familyName.localeCompare(b.familyName);
+      return last !== 0 ? last : a.firstName.localeCompare(b.firstName);
+    });
 
   const handleAdd = async (contact) => {
     const newContact = await createContact(contact);
@@ -56,77 +57,87 @@ function App() {
   };
 
   return (
-    <div className={`app-container ${theme}`}>
-      <HeaderBar theme={theme} toggleTheme={toggleTheme} />
+    <>
+      {/* Only show the app when signed in */}
+      <SignedIn>
+        <div className={`app-container ${theme}`}>
+          <HeaderBar theme={theme} toggleTheme={toggleTheme} />
 
-      <div className="app-layout">
-        <Sidebar />
+          <div className="app-layout">
+            <Sidebar />
 
-        <div className="tab-content">
-          <h2>{selectedContact ? "Contact" : "Create New"}</h2>
+            <div className="tab-content">
+              <h2>{selectedContact ? "Contact" : "Create New"}</h2>
 
-          <ContactForm
-            selectedContact={selectedContact}
-            onAddContact={handleAdd}
-            onUpdateContact={handleUpdate}
-            onDeleteContact={handleDelete}
-            clearSelection={() => setSelectedContact(null)}
-          />
+              <ContactForm
+                selectedContact={selectedContact}
+                onAddContact={handleAdd}
+                onUpdateContact={handleUpdate}
+                onDeleteContact={handleDelete}
+                clearSelection={() => setSelectedContact(null)}
+              />
 
-          {/* SEARCH + TITLE */}
-         <div
-  style={{
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: "20px",
-  }}
->
-  <h3 style={{ margin: 0 }}>All Contacts</h3>
+              {/* SEARCH + TITLE */}
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  marginTop: "20px",
+                }}
+              >
+                <h3 style={{ margin: 0 }}>All Contacts</h3>
 
-  <div style={{ position: "relative", width: "270px", marginTop: "10px" }}>
-    <input
-      type="text"
-      placeholder="Search..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-      style={{
-        padding: "6px 32px 6px 10px",
-        borderRadius: "6px",
-        border: "1px solid var(--border)",
-        width: "100%",
-        boxSizing: "border-box",
-      }}
-    />
+                <div style={{ position: "relative", width: "270px", marginTop: "10px" }}>
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    style={{
+                      padding: "6px 32px 6px 10px",
+                      borderRadius: "6px",
+                      border: "1px solid var(--border)",
+                      width: "100%",
+                      boxSizing: "border-box",
+                    }}
+                  />
 
-    {search && (
-      <span
-        onClick={() => setSearch("")}
-        title="Clear search"
-        style={{
-          position: "absolute",
-          right: "8px",
-          top: "50%",
-          transform: "translateY(-50%)",
-          cursor: "pointer",
-          fontSize: "16px",
-          color: "var(--text)",
-        }}
-      >
-        ×
-      </span>
-    )}
-  </div>
-</div>
+                  {search && (
+                    <span
+                      onClick={() => setSearch("")}
+                      title="Clear search"
+                      style={{
+                        position: "absolute",
+                        right: "8px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        cursor: "pointer",
+                        fontSize: "16px",
+                        color: "var(--text)",
+                      }}
+                    >
+                      ×
+                    </span>
+                  )}
+                </div>
+              </div>
 
-          <ContactsList
-            contacts={filteredContacts}
-            selectedId={selectedContact?.id}
-            onSelectContact={(c) => setSelectedContact(c)}
-          />
+              <ContactsList
+                contacts={filteredContacts}
+                selectedId={selectedContact?.id}
+                onSelectContact={(c) => setSelectedContact(c)}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </SignedIn>
+
+      {/* Show Clerk sign-in screen when logged out */}
+      <SignedOut>
+        <SignIn />
+      </SignedOut>
+    </>
   );
 }
 
