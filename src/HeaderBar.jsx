@@ -4,21 +4,22 @@ function HeaderBar({ theme, toggleTheme }) {
   const version = packageJson.version;
 
   return (
-    <div className="header-bar">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-        }}
-      >
+    <div 
+      className="header-bar"
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "flex-start"
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
         <h1 style={{ margin: 0, textAlign: "left" }}>Contact Manager</h1>
         <span
           style={{
             fontSize: "0.75rem",
             color: "#888",
             marginTop: "10px",
-            textAlign: "left",
+            textAlign: "left"
           }}
         >
           v{version}
@@ -33,6 +34,3 @@ function HeaderBar({ theme, toggleTheme }) {
 }
 
 export default HeaderBar;
-
-
-
