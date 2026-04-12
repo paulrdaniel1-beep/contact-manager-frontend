@@ -12,7 +12,9 @@ function App() {
   const [activeTab, setActiveTab] = useState("add");
   const [theme, setTheme] = useState("light");
 
-  // Load contacts from backend
+  // Prefill state for Add Contact form
+  const [prefill, setPrefill] = useState(null);
+
   useEffect(() => {
     fetch(`${API_BASE}/contacts`)
       .then((res) => res.json())
@@ -34,7 +36,6 @@ function App() {
     setTheme(theme === "light" ? "dark" : "light");
   }
 
-  // Add a contact
   function addContact(contact) {
     fetch(`${API_BASE}/contacts`, {
       method: "POST",
@@ -61,7 +62,6 @@ function App() {
       );
   }
 
-  // Update a contact
   function updateContact(updated) {
     fetch(`${API_BASE}/contacts/${updated.id}`, {
       method: "PUT",
@@ -91,7 +91,6 @@ function App() {
       );
   }
 
-  // Delete a contact
   function deleteContact(id) {
     fetch(`${API_BASE}/contacts/${id}`, {
       method: "DELETE"
@@ -113,9 +112,20 @@ function App() {
           {activeTab === "add" && (
             <>
               <div className="tab-content">
-                <ContactForm onAddContact={addContact} />
+                <ContactForm onAddContact={addContact} prefill={prefill} />
               </div>
-              <ContactsList contacts={contacts} />
+
+              <ContactsList
+                contacts={contacts}
+                onSelectContact={(c) =>
+                  setPrefill({
+                    firstName: c.firstName,
+                    familyName: c.familyName,
+                    email: c.email,
+                    phone: c.phone
+                  })
+                }
+              />
             </>
           )}
 
@@ -135,4 +145,3 @@ function App() {
 }
 
 export default App;
-
