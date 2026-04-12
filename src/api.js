@@ -1,5 +1,4 @@
 // api.js
-import { getToken } from "@clerk/clerk-react";
 
 const BASE_URL = "https://contact-manager-backend-dhl9.onrender.com";
 
@@ -24,28 +23,25 @@ function toSnake(contact) {
   };
 }
 
-// Helper: fetch with Clerk token
-async function authedFetch(url, options = {}) {
-  const token = await getToken();
-
+// Basic fetch wrapper (no Clerk token)
+async function apiFetch(url, options = {}) {
   return fetch(url, {
     ...options,
     headers: {
-      ...(options.headers || {}),
-      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
+      ...(options.headers || {}),
     },
   });
 }
 
 export async function fetchContacts() {
-  const res = await authedFetch(`${BASE_URL}/contacts`);
+  const res = await apiFetch(`${BASE_URL}/contacts`);
   const data = await res.json();
   return data.map(toCamel);
 }
 
 export async function createContact(contact) {
-  const res = await authedFetch(`${BASE_URL}/contacts`, {
+  const res = await apiFetch(`${BASE_URL}/contacts`, {
     method: "POST",
     body: JSON.stringify(toSnake(contact)),
   });
@@ -53,7 +49,7 @@ export async function createContact(contact) {
 }
 
 export async function updateContact(contact) {
-  const res = await authedFetch(`${BASE_URL}/contacts/${contact.id}`, {
+  const res = await apiFetch(`${BASE_URL}/contacts/${contact.id}`, {
     method: "PUT",
     body: JSON.stringify(toSnake(contact)),
   });
@@ -61,8 +57,9 @@ export async function updateContact(contact) {
 }
 
 export async function deleteContact(id) {
-  await authedFetch(`${BASE_URL}/contacts/${id}`, {
+  await apiFetch(`${BASE_URL}/contacts/${id}`, {
     method: "DELETE",
   });
   return true;
 }
+
