@@ -1,12 +1,18 @@
 import { useState } from "react";
+import HeaderBar from "./HeaderBar";
 import Sidebar from "./Sidebar";
 import ContactForm from "./ContactForm";
 import ContactsList from "./ContactsList";
 
 function App() {
+  const [theme, setTheme] = useState("light");
   const [activeTab, setActiveTab] = useState("contacts");
   const [contacts, setContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   const addContact = (contact) => {
     setContacts([...contacts, { ...contact, id: Date.now() }]);
@@ -24,7 +30,9 @@ function App() {
   };
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${theme}`}>
+      <HeaderBar theme={theme} toggleTheme={toggleTheme} />
+
       <div className="app-layout">
         <Sidebar
           activeTab={activeTab}
@@ -46,6 +54,7 @@ function App() {
           />
 
           <h3>All Contacts</h3>
+
           <ContactsList
             contacts={contacts}
             onSelectContact={(c) => setSelectedContact(c)}
@@ -57,4 +66,3 @@ function App() {
 }
 
 export default App;
-
