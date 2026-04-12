@@ -3,17 +3,10 @@ function Sidebar({ activeTab, setActiveTab }) {
     <div className="sidebar">
       <ul>
         <li
-          className={activeTab === "add" ? "active" : ""}
-          onClick={() => setActiveTab("add")}
+          className={activeTab === "contacts" ? "active" : ""}
+          onClick={setActiveTab}
         >
-          Add Contact
-        </li>
-
-        <li
-          className={activeTab === "edit" ? "active" : ""}
-          onClick={() => setActiveTab("edit")}
-        >
-          Search / Edit Contact
+          Contacts
         </li>
       </ul>
     </div>
@@ -21,3 +14,4 @@ function Sidebar({ activeTab, setActiveTab }) {
 }
 
 export default Sidebar;
+
