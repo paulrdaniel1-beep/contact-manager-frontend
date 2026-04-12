@@ -12,7 +12,6 @@ function ContactForm({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
-  // Load selected contact OR clear form
   useEffect(() => {
     if (selectedContact) {
       setFirstName(selectedContact.firstName);
@@ -28,22 +27,14 @@ function ContactForm({
   }, [selectedContact]);
 
   const handleSave = () => {
+    const contact = { firstName, familyName, email, phone };
+
     if (selectedContact) {
-      onUpdateContact({
-        ...selectedContact,
-        firstName,
-        familyName,
-        email,
-        phone,
-      });
+      onUpdateContact({ ...contact, id: selectedContact.id });
     } else {
-      onAddContact({
-        firstName,
-        familyName,
-        email,
-        phone,
-      });
+      onAddContact(contact);
     }
+
     clearSelection();
   };
 

@@ -7,9 +7,9 @@ function ContactsList({ contacts, onSelectContact }) {
         </div>
       )}
 
-      {contacts.map((c, index) => (
+      {contacts.map((c) => (
         <div
-          key={c.id ?? index}
+          key={c.id}
           className="contact-item"
           onClick={() => onSelectContact(c)}
           style={{ cursor: "pointer" }}

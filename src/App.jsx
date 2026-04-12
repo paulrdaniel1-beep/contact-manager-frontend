@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HeaderBar from "./HeaderBar";
 import Sidebar from "./Sidebar";
 import ContactForm from "./ContactForm";
 import ContactsList from "./ContactsList";
 
+import {
+  fetchContacts,
+  createContact,
+  updateContact,
+  deleteContact,
+} from "./api";
+
 function App() {
   const [theme, setTheme] = useState("light");
-  const [activeTab, setActiveTab] = useState("contacts");
   const [contacts, setContacts] = useState([]);
   const [selectedContact, setSelectedContact] = useState(null);
 
@@ -14,17 +20,25 @@ function App() {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
-  const addContact = (contact) => {
-    setContacts([...contacts, { ...contact, id: Date.now() }]);
+  // Load contacts from backend
+  useEffect(() => {
+    fetchContacts().then(setContacts);
+  }, []);
+
+  const handleAdd = async (contact) => {
+    const newContact = await createContact(contact);
+    setContacts([...contacts, newContact]);
   };
 
-  const updateContact = (updated) => {
+  const handleUpdate = async (contact) => {
+    const updated = await updateContact(contact);
     setContacts(
       contacts.map((c) => (c.id === updated.id ? updated : c))
     );
   };
 
-  const deleteContact = (id) => {
+  const handleDelete = async (id) => {
+    await deleteContact(id);
     setContacts(contacts.filter((c) => c.id !== id));
     setSelectedContact(null);
   };
@@ -34,22 +48,16 @@ function App() {
       <HeaderBar theme={theme} toggleTheme={toggleTheme} />
 
       <div className="app-layout">
-        <Sidebar
-          activeTab={activeTab}
-          setActiveTab={() => {
-            setActiveTab("contacts");
-            setSelectedContact(null);
-          }}
-        />
+        <Sidebar />
 
         <div className="tab-content">
           <h2>{selectedContact ? "Edit Contact" : "Create New"}</h2>
 
           <ContactForm
             selectedContact={selectedContact}
-            onAddContact={addContact}
-            onUpdateContact={updateContact}
-            onDeleteContact={deleteContact}
+            onAddContact={handleAdd}
+            onUpdateContact={handleUpdate}
+            onDeleteContact={handleDelete}
             clearSelection={() => setSelectedContact(null)}
           />
 
