@@ -68,29 +68,50 @@ function App() {
           />
 
           {/* SEARCH + TITLE */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: "20px",
-            }}
-          >
-            <h3 style={{ margin: 0 }}>All Contacts</h3>
+         <div
+  style={{
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: "20px",
+  }}
+>
+  <h3 style={{ margin: 0 }}>All Contacts</h3>
 
-            <input
-              type="text"
-              placeholder="Search..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              style={{
-                padding: "6px 10px",
-                borderRadius: "6px",
-                border: "1px solid var(--border)",
-                width: "180px",
-              }}
-            />
-          </div>
+  <div style={{ position: "relative", width: "270px" }}>
+    <input
+      type="text"
+      placeholder="Search..."
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      style={{
+        padding: "6px 32px 6px 10px",
+        borderRadius: "6px",
+        border: "1px solid var(--border)",
+        width: "100%",
+        boxSizing: "border-box",
+      }}
+    />
+
+    {search && (
+      <span
+        onClick={() => setSearch("")}
+        title="Clear search"
+        style={{
+          position: "absolute",
+          right: "8px",
+          top: "50%",
+          transform: "translateY(-50%)",
+          cursor: "pointer",
+          fontSize: "16px",
+          color: "var(--text)",
+        }}
+      >
+        ×
+      </span>
+    )}
+  </div>
+</div>
 
           <ContactsList
             contacts={filteredContacts}

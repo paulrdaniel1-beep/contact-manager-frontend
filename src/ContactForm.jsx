@@ -113,7 +113,7 @@ function ContactForm({
           onClick={handleSave}
           title="Save this contact to your database"
         >
-          💾 {selectedContact ? "Save Changes" : "Save"}
+          💾 {selectedContact ? "Save" : "Save"}
         </button>
 
         <button
