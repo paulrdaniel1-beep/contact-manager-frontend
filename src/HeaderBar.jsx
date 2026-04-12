@@ -13,7 +13,7 @@ function HeaderBar({ theme, toggleTheme }) {
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <h1 style={{ margin: 0, textAlign: "left" }}>Contact Manager</h1>
+        <h1 style={{ margin: 0, textAlign: "left" }}>Paul's Toolbox</h1>
         <span
           style={{
             fontSize: "0.75rem",

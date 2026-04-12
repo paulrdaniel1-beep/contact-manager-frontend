@@ -57,7 +57,7 @@ function App() {
         <Sidebar />
 
         <div className="tab-content">
-          <h2>{selectedContact ? "Edit Contact" : "Create New"}</h2>
+          <h2>{selectedContact ? "Contact" : "Create New"}</h2>
 
           <ContactForm
             selectedContact={selectedContact}
