@@ -45,6 +45,37 @@ export async function fetchContact(id) {
   return toCamel(await res.json());
 }
 
+function toCamelUser(row) {
+  return {
+    userId: row.user_id,
+    firstName: row.first_name,
+    lastName: row.last_name,
+    loginCount: row.login_count,
+    lastLogin: row.last_login,
+  };
+}
+
+function toSnakeUser(user) {
+  const payload = {
+    first_name: user.firstName,
+    last_name: user.lastName,
+  };
+
+  if (user.userId) {
+    payload.user_id = user.userId;
+  }
+
+  if (user.loginCount != null) {
+    payload.login_count = user.loginCount;
+  }
+
+  if (user.lastLogin) {
+    payload.last_login = user.lastLogin;
+  }
+
+  return payload;
+}
+
 export async function fetchUserStats() {
   const res = await apiFetch(`${BASE_URL}/user-stats`);
   const data = await res.json();
@@ -55,6 +86,14 @@ export async function fetchUserStats() {
     loginCount: user.login_count,
     lastLogin: user.last_login,
   }));
+}
+
+export async function createUser(user) {
+  const res = await apiFetch(`${BASE_URL}/user-logins`, {
+    method: "POST",
+    body: JSON.stringify(toSnakeUser(user)),
+  });
+  return toCamelUser(await res.json());
 }
 
 export async function createContact(contact) {
