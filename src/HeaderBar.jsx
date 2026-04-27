@@ -21,7 +21,7 @@ function HeaderBar({ theme, toggleTheme }) {
         <span
           style={{
             fontSize: "0.75rem",
-            color: "#888",
+            color: "var(--text)",
             marginTop: "10px",
             textAlign: "left"
           }}

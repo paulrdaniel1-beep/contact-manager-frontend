@@ -5,8 +5,8 @@
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
-  background: #f5f7fa;
-  color: #333;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .app-container {
@@ -14,15 +14,15 @@ body {
   max-width: 1100px;
   min-width: 800px;
   margin: 40px auto;
-  background: white;
+  background: var(--bg);
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  box-shadow: var(--shadow);
 }
 
 .app-container.dark {
-  background: #1e1f22;
-  color: #e6e6e6;
+  background: var(--bg);
+  color: var(--text);
 }
 
 /* -------------------------------------------------- */
@@ -40,9 +40,14 @@ body {
   padding: 8px 14px;
   border: none;
   border-radius: 8px;
-  background: #2a4d8f;
+  background: var(--accent);
   color: white;
   cursor: pointer;
+  transition: background 0.2s;
+}
+
+.theme-toggle:hover {
+  background: #9c4dcc;
 }
 
 /* -------------------------------------------------- */
@@ -93,12 +98,12 @@ body {
 
 /* Dark mode sidebar */
 .app-container.dark .sidebar {
-  background: #2a2c31;
+  background: var(--bg);
 }
 
 .app-container.dark .sidebar ul li {
   background: #333;
-  color: #ddd;
+  color: var(--text);
 }
 
 .app-container.dark .sidebar ul li:hover {
@@ -106,7 +111,7 @@ body {
 }
 
 .app-container.dark .sidebar ul li.active {
-  background: #0056cc;
+  background: var(--accent);
   color: white;
 }
 
@@ -123,8 +128,8 @@ body {
 }
 
 .app-container.dark .tab-content {
-  background: #2a2c31;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+  background: var(--bg);
+  box-shadow: var(--shadow);
 }
 
 /* -------------------------------------------------- */
@@ -150,9 +155,9 @@ form button {
 }
 
 .app-container.dark input {
-  background: #2a2c31;
-  color: #fff;
-  border: 1px solid #555;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 /* -------------------------------------------------- */
@@ -170,8 +175,8 @@ form button {
 }
 
 .app-container.dark .all-contacts {
-  background: #2a2c31;
-  border-color: #444;
+  background: var(--bg);
+  border-color: var(--border);
 }
 
 /* Tighter spacing for scroll box */
@@ -197,8 +202,8 @@ form button {
 }
 
 .app-container.dark .contact-item {
-  background: #2a2c31;
-  border-color: #444;
+  background: var(--bg);
+  border-color: var(--border);
 }
 
 /* -------------------------------------------------- */
@@ -227,13 +232,13 @@ form button {
 }
 
 .app-container.dark .combo-dropdown {
-  background: #2a2c31;
-  border-color: #555;
+  background: var(--bg);
+  border-color: var(--border);
 }
 
 .app-container.dark .combo-dropdown li {
-  border-bottom: 1px solid #444;
-  color: #ddd;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
 }
 
 .app-container.dark .combo-dropdown li:hover {
