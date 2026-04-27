@@ -10,14 +10,15 @@ body {
 }
 
 .app-container {
-  width: 800px;
+  width: 100%;
   max-width: 1100px;
-  min-width: 800px;
-  margin: 40px auto;
+  min-width: 300px;
+  margin: 20px auto;
   background: var(--bg);
-  padding: 30px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: var(--shadow);
+  box-sizing: border-box;
 }
 
 .app-container.dark {
@@ -243,4 +244,55 @@ form button {
 
 .app-container.dark .combo-dropdown li:hover {
   background: #3a3c41;
+}
+
+/* -------------------------------------------------- */
+/* MOBILE RESPONSIVE DESIGN                          */
+/* -------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .app-container {
+    margin: 10px;
+    padding: 15px;
+    min-width: unset;
+    width: calc(100% - 20px);
+  }
+
+  .app-layout {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .tab-content {
+    padding: 15px;
+  }
+
+  .header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .theme-toggle {
+    align-self: flex-end;
+  }
+
+  /* Reduce font sizes on mobile */
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  /* Adjust search input width */
+  .app-container .tab-content > div > div > div {
+    width: 100% !important;
+  }
 }

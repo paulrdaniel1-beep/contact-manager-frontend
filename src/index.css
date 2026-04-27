@@ -232,3 +232,22 @@ button:disabled {
 .app-container.dark button:hover {
   background: #9c4dcc;
 }
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+  :root {
+    font: 16px/145% var(--sans);
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  #root {
+    border-inline: none;
+  }
+}
