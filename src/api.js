@@ -45,6 +45,18 @@ export async function fetchContact(id) {
   return toCamel(await res.json());
 }
 
+export async function fetchUserStats() {
+  const res = await apiFetch(`${BASE_URL}/user-stats`);
+  const data = await res.json();
+  return data.map((user) => ({
+    userId: user.user_id,
+    firstName: user.first_name,
+    lastName: user.last_name,
+    loginCount: user.login_count,
+    lastLogin: user.last_login,
+  }));
+}
+
 export async function createContact(contact) {
   const res = await apiFetch(`${BASE_URL}/contacts`, {
     method: "POST",
