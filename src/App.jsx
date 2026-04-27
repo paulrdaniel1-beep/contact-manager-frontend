@@ -29,6 +29,15 @@ function App() {
     fetchContacts().then(setContacts);
   }, []);
 
+  // Refresh contacts when window gains focus (for multi-device updates)
+  useEffect(() => {
+    const handleFocus = () => {
+      fetchContacts().then(setContacts);
+    };
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, []);
+
   const filteredContacts = contacts
     .filter((c) => {
       const full = `${c.firstName} ${c.familyName}`.toLowerCase();
