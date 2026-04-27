@@ -132,7 +132,11 @@ function App() {
                 selectedId={selectedContact?.id}
                 onSelectContact={async (c) => {
                   try {
-                    const latest = await fetchContact(c.id);
+                    const [latest, allContacts] = await Promise.all([
+                      fetchContact(c.id),
+                      fetchContacts()
+                    ]);
+                    setContacts(allContacts);
                     setSelectedContact(latest);
                   } catch (error) {
                     console.error("Failed to fetch contact:", error);
