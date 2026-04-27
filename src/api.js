@@ -40,6 +40,11 @@ export async function fetchContacts() {
   return data.map(toCamel);
 }
 
+export async function fetchContact(id) {
+  const res = await apiFetch(`${BASE_URL}/contacts/${id}`);
+  return toCamel(await res.json());
+}
+
 export async function createContact(contact) {
   const res = await apiFetch(`${BASE_URL}/contacts`, {
     method: "POST",

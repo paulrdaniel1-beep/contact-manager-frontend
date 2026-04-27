@@ -7,6 +7,7 @@ import ContactsList from "./ContactsList";
 
 import {
   fetchContacts,
+  fetchContact,
   createContact,
   updateContact,
   deleteContact,
@@ -48,6 +49,9 @@ function App() {
     setContacts(
       contacts.map((c) => (c.id === updated.id ? updated : c))
     );
+    if (selectedContact && selectedContact.id === updated.id) {
+      setSelectedContact(updated);
+    }
   };
 
   const handleDelete = async (id) => {
@@ -126,7 +130,16 @@ function App() {
               <ContactsList
                 contacts={filteredContacts}
                 selectedId={selectedContact?.id}
-                onSelectContact={(c) => setSelectedContact(c)}
+                onSelectContact={async (c) => {
+                  try {
+                    const latest = await fetchContact(c.id);
+                    setSelectedContact(latest);
+                  } catch (error) {
+                    console.error("Failed to fetch contact:", error);
+                    // Fallback to local data
+                    setSelectedContact(c);
+                  }
+                }}
               />
             </div>
           </div>
